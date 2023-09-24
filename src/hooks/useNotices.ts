@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+
+export type Notice = {
+  id: number;
+  title: string;
+  content: string;
+}
+
 const useNotices = () => {
-    
-    type Notice = {
-        title: string;
-        content: string;
-    }
     
     const [notices, setNotices] = useState<Notice[]>([]);
     const [loading, setLoading] = useState(false);
