@@ -3,6 +3,7 @@ import React from "react";
 import Container from "@/components/Container";
 import { GetServerSideProps } from "next";
 import useDetail from "@/hooks/useDetail";
+import useDelete from "@/hooks/useDelete";
 
 interface DetailProps {
     id: number;
@@ -10,6 +11,15 @@ interface DetailProps {
 
 const DetailComponent: React.FC<DetailProps> = ({ id }) => {
     const { notice, error, loading } = useDetail(id);
+    const { deleteNotice } = useDelete();
+
+    // delete event
+    const handleDelete = () => {
+        if (window.confirm("정말로 이 게시물을 삭제하시겠습니까?")) {
+            console.log(`Deleting notice with id: ${id}`);
+            deleteNotice(id);
+        }
+    };
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
@@ -52,7 +62,10 @@ const DetailComponent: React.FC<DetailProps> = ({ id }) => {
                                     수정
                                 </div>
                             </div>
-                            <div className="w-13 pl-3 pr-3 pt-2 pb-2 bg-red-600 rounded-md flex justify-center items-center space-x-2">
+                            <div
+                                className="w-13 pl-3 pr-3 pt-2 pb-2 bg-red-600 rounded-md flex justify-center items-center space-x-2 cursor-pointer"
+                                onClick={handleDelete}
+                            >
                                 <div className="text-center text-white text-lg font-medium leading-4 break-words font-pretendard">
                                     삭제
                                 </div>
