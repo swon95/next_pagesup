@@ -1,21 +1,21 @@
-// pages/read/[id].tsx
 import React from "react";
 import Container from "@/components/Container";
 import { GetServerSideProps } from "next";
 import useDetail from "@/hooks/useDetail";
 import useDelete from "@/hooks/useDelete";
+import Link from "next/link";
 
 interface DetailProps {
     id: number;
 }
 
-const DetailComponent: React.FC<DetailProps> = ({ id }) => {
+const Detail: React.FC<DetailProps> = ({ id }) => {
     const { notice, error, loading } = useDetail(id);
     const { deleteNotice } = useDelete();
 
     // delete event
     const handleDelete = () => {
-        if (window.confirm("정말로 이 게시물을 삭제하시겠습니까?")) {
+        if (window.confirm("정말 삭제하시겠습니까?")) {
             console.log(`Deleting notice with id: ${id}`);
             deleteNotice(id);
         }
@@ -53,14 +53,20 @@ const DetailComponent: React.FC<DetailProps> = ({ id }) => {
                         <div className="w-full border-t-2"></div>
                         <div className="w-full h-full flex flex-start items-start space-x-4 pt-4">
                             <div className="h-full py-2 px-3 bg-white rounded-md border border-[#DEDEDE] inline-flex justify-center items-center space-x-2">
-                                <div className="text-center text-[#222222] text-base font-medium leading-4 break-words font-pretendard">
+                                <Link
+                                    href="/list"
+                                    className="text-center text-[#222222] text-base font-medium leading-4 break-words font-pretendard"
+                                >
                                     목록으로
-                                </div>
+                                </Link>
                             </div>
                             <div className="w-13 pl-3 pr-3 pt-2 pb-2 bg-[#FF5C00] rounded-md flex justify-center items-center space-x-2">
-                                <div className="text-center text-white text-lg font-medium leading-4 break-words font-pretendard">
+                                <Link
+                                    href={`/edit/${id}`}
+                                    className="text-center text-white text-lg font-medium leading-4 break-words font-pretendard"
+                                >
                                     수정
-                                </div>
+                                </Link>
                             </div>
                             <div
                                 className="w-13 pl-3 pr-3 pt-2 pb-2 bg-red-600 rounded-md flex justify-center items-center space-x-2 cursor-pointer"
@@ -88,4 +94,4 @@ export const getServerSideProps: GetServerSideProps<DetailProps> = async (
     };
 };
 
-export default DetailComponent;
+export default Detail;

@@ -1,4 +1,3 @@
-// hooks/useDelete.ts
 import { useCallback } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
