@@ -8,7 +8,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
   if(req.method === 'PUT') {
     try {
         // Detail 에서 제목, 내용 가져와 req.body 에 담음
-      const { title, content } = req.body;
+      const { id, title, content } = req.body;
       const notice = await prisma.notice.update({
         where: { id: Number(id) },
         data: { title, content },
